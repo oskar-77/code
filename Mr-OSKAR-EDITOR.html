@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Mr.OSKAR Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/theme-monokai.css">
+    <link rel="stylesheet" href="./css/style-main.css">
+</head>
+
+<body>
+    
+    <header id="header" >Editor Mr.OSKAR
+    	<i class="fas fa-bars menu-icon" onclick="toggleSidebar()"></i>
+    	
+   </header>
+   
+    <div class="sidebar" id="sidebar">
+    <div class="logo"></div>
+    <div  class="site-name">Mr.OSKAR
+    <p  style="font-size:13px;color:#666;">Editor and live viewer for html, css and javascript codes <br>Email :oskar1python@gmail.com</p>
+    
+
+</div>
+
+    <div class="main-title" onclick="toggleSection('section2')">
+        <span>Tools</span><i class="fas fa-chevron-right"></i>
+    </div>
+    
+    <div id="section2" class="subtitles" >
+        
+        <div class="file-info"  id="fileInfo">
+           
+            
+        </div>
+        <div class="col">
+            <p style="color: #ff8c00;">File :</p>
+            <button onclick="createNewFile()" class="btn btn-secondary">New Fille</button>
+            <input type="text" id="fileName" class="form-control" placeholder="File Name" value="">
+            <select id="fileType" class="form-select">
+                <option value=".txt">Text</option>
+                
+                <option value=".html">HTML</option>
+                <option value=".css">CSS</option>
+                <option value=".js">JavaScript</option>
+
+            </select>
+            <button onclick="saveFile()" class="btn btn-success">Save File</button>
+            <button onclick="openFile()" class="btn btn-primary">Open File</button>
+            <input type="file" id="fileInput" class="inputoskar" accept=".txt,.js,.html,.css">
+            
+            
+            
+        </div>
+        
+       
+    </div>
+
+    <div class="main-title" onclick="toggleSection('section1')">
+        <span>About </span><i class="fas fa-chevron-right"></i>
+    </div>
+    <div id="section1" class="subtitles">
+        <p id="about-us">About us</p>
+        
+        <hr>
+        	
+        <p id="about-use">About use</p>
+    </div>
+    <script src="./j/copy.js"></script>
+    
+
+    <div class="main-title" onclick="toggleSection('contact')">
+        <span>Customer Service</span><i class="fas fa-chevron-right"></i>
+    </div>
+    <div id="contact" class="subtitles">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://www.instagram.com/oskar.1k"><i class="fab fa-instagram"></i> instagram</a>
+            <a href="https://www.linkedin.com/in/%D8%A7%D8%A8%D8%AF%D8%A7%D8%B9-for-you-783579304?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="https://api.whatsapp.com/send?phone=+967773957426"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<script>
+function toggleSection(id) {
+    const section = document.getElementById(id);
+    const icon = section.previousElementSibling.querySelector('i');
+    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+    icon.classList.toggle('rotate');
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const isOpen = sidebar.style.width === '250px';
+
+    sidebar.style.width = isOpen ? '0' : '250px';
+    overlay.classList.toggle('active', !isOpen);
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    sidebar.style.width = '0';
+    overlay.classList.remove('active');
+}
+</script>
+       <div id="editor-container">
+        <button id="copy-btn">Copy</button>
+        <button id="fullscreen-btn">Zoom</button>
+        <button id="expandButton">Fill page</button>
+        <iframe id="output"></iframe>
+        
+        <div id="editor" >
+            <xmp>
+<!-- DELETE ALL THIS AND WRITE YOUR CODE-->
+        	
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        body {
+flex-flow: column;      
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ff8c00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .cube-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            transform-style: preserve-3d;
+            animation: spin 4s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: transparent;
+            border: 2px solid #1a1a1a;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            transform-origin: center;
+            transition: transform 0.5s ease;
+        }
+
+        .cube-face div {
+            background-color: transparent;
+            border: 1px solid #ff8c00;
+            box-shadow: 0 0 8px #ff8c00;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .cube-face div:hover {
+            transform: translateZ(10px);
+            box-shadow: 0 0 35px 10px #fff;
+        }
+
+        .cube-face.front {
+            transform: translateZ(75px);
+        }
+
+        .cube-face.back {
+            transform: rotateY(180deg) translateZ(75px);
+        }
+
+        .cube-face.left {
+            transform: rotateY(-90deg) translateZ(75px);
+        }
+
+        .cube-face.right {
+            transform: rotateY(90deg) translateZ(75px);
+        }
+
+        .cube-face.top {
+            transform: rotateX(90deg) translateZ(75px);
+        }
+
+        .cube-face.bottom {
+            transform: rotateX(-90deg) translateZ(75px);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+
+        .splash-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            bottom: 10%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .splash-text span {
+            display: inline-block;
+            opacity: 0;
+            animation: glow 1.5s forwards;
+            animation-delay: calc(0.1s * var(--i)); /* Timing for each letter */
+        }
+
+        @keyframes glow {
+            0% {
+                opacity: 0;
+                text-shadow: 0 0 5px #ff8c00, 0 0 10px #ff8c00;
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 15px #ff8c00, 0 0 30px #ff8c00;
+            }
+            100% {
+                opacity: 0;
+                text-shadow: 0 0 5px #ff8c00, 0 0 10px #ff8c00;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+   <!-- <p style="margin-bottom:3rem;">Delete all this and write your code here </p>-->
+
+
+    <div class="cube-container">
+        <!-- أوجه المكعب -->
+        <div class="cube-face front">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div class="cube-face back">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div class="cube-face left">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div class="cube-face right">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div class="cube-face top">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+        <div class="cube-face bottom">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+    </div>
+
+
+
+  
+</body>
+
+</html>
+
+
+</xmp></div>
+        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-language_tools.js"></script>
+    <script src="./j/dd.js"></script>
+    <!-- <script src="https://oskar-77.github.io/s/dd.js"></script> -->
+
+        <script>
+        // إضافة حالة إلى سجل التنقل عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            window.history.pushState(null, "", window.location.href);
+        });
+
+        // التعامل مع زر الرجوع
+        window.addEventListener("popstate", function () {
+            const confirmExit = confirm("Are you sure you want to leave this page?");
+            if (confirmExit) {
+                // السماح بالخروج
+                window.history.back();
+            } else {
+                // إعادة إضافة الحالة لمنع الخروج
+                window.history.pushState(null, "", window.location.href);
+            }
+        });
+    </script>
+    
+</body>
+</html>

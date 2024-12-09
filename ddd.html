@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محرر الملفات - متوافق مع الهواتف</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      padding-top: 20px;
+      box-sizing: border-box;
+    }
+
+    #controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    button, input[type="file"] {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      flex: 1;
+      max-width: 200px;
+      text-align: center;
+    }
+
+    button:hover, input[type="file"]:hover {
+      background-color: #0056b3;
+    }
+
+    textarea {
+      width: 90%;
+      height: 50vh;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 14px;
+      box-sizing: border-box;
+      resize: none;
+    }
+
+    @media (max-width: 600px) {
+      button, input[type="file"] {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      textarea {
+        height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <input type="file" id="fileInput" accept=".html,.css,.js">
+    <button id="saveFile">حفظ الملف</button>
+    <button id="newFile">ملف جديد</button>
+  </div>
+  <textarea id="editor" placeholder="قم بفتح ملف أو إنشاء ملف جديد..."></textarea>
+
+  <script>
+    const editor = document.getElementById("editor");
+    const fileInput = document.getElementById("fileInput");
+    let currentFileName = "newFile.txt";
+
+    // تحميل ملف
+    fileInput.addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        currentFileName = file.name; // حفظ اسم الملف
+        const reader = new FileReader();
+        reader.onload = () => {
+          editor.value = reader.result;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    // حفظ الملف
+    document.getElementById("saveFile").addEventListener("click", () => {
+      const blob = new Blob([editor.value], { type: "text/plain" });
+      const a = document.createElement("a");
+
+      // تحديد الرابط لتحميل الملف
+      a.href = URL.createObjectURL(blob);
+
+      // استخدام اسم الملف الحالي أو اسم افتراضي
+      a.download = currentFileName || "newFile.txt";
+
+      // محاكاة النقر على الرابط
+      document.body.appendChild(a);
+      a.click();
+
+      // تنظيف الرابط بعد التنزيل
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+
+      alert("تم حفظ الملف بنجاح!");
+    });
+
+    // إنشاء ملف جديد
+    document.getElementById("newFile").addEventListener("click", () => {
+      currentFileName = "newFile.txt"; // إعادة تعيين اسم الملف
+      editor.value = ""; // إفراغ المحرر
+      alert("تم إنشاء ملف جديد!");
+    });
+  </script>
+</body>
+</html>
